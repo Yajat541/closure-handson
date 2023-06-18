@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1 class="heading">Closure Handson</h1>
+    <hr>
+    <div class="maincontainer">
+        <div class="container">
+            <div class="question">
+                Q 1. 
+            </div>
+            <div class="answer">
+            <pre class="code">
+                   function counter(){
+                    var counter = 0;
+                
+                    function IncreaseCounter() {
+                        return counter += 1;
+                    };
+                
+                    return IncreaseCounter;
+                }
+                
+                var counter = counter();
+                alert(counter());
+                alert(counter());
+                alert(counter());
+                alert(counter());
+            </pre>
+            <p class="answer"> 4 time alert is shown with counter value 1,2,3,4 respectivly <br></p>
+            <p class="answer"> EXPLANATION - when counter() function is being called then it return the IncreaseCounter() function
+                and a counter variable (local variable) because of closure
+                and when the couter() (global first class function) function is being called inside the alert it run
+                IncreaseCounter() function that has use a counter variable which is not in the
+                IncreaseCounter's local memory so it starts finding in the lexical scope and due to closure it uses
+                the counter variable (local variable of counter() function) and increase its value and also update
+                the counter variable.
+                then again alert(counter()); is being call which increase the value of counter (local variable of
+                closure) whos value is increased by 1 because of the previous alert(counter()); so in increase the
+                value of counter variable. </p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+                Q 2.
+            </div>
+            <div class="answer">
+            <pre class="code">
+                let count = 0;
+                (function () {
+                if (count === 0) {
+                    let count = 1;
+                    console.log(count); // What is logged?
+                }
+                console.log(count); // What is logged?
+                })();
+            </pre>
+            <p class="answer"> 1 <br>  0 <br> </p>
+            <p class="answer"> EXPLANATION - There is count in the if condition, so to find the the value of count is search in the
+                lexical scope where count =0 (a global variable) so, condition is satisfied
+                now 1 st console .log(count) will print with the value of 1 because of the local variable in the
+                local memory (let count=1) then another console.log(count) will search for count and
+                it prints count 0.</p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+                Q 3.
+            </div>
+            <div class="answer">
+            <pre class="code">
+                 for (var i = 0; i < 3; i++) {
+                    setTimeout(function log() {
+                      console.log(i); // What is logged?
+                    }, 1000);
+                  }
+            </pre>
+            <p class="answer">3 <br> </p>
+            <p class="answer"> After the loop get's over , it will run setTimeOut for 3 times which will print value of i which is now 3</p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+                Q 4.Write a code to calculate area of a rectangle using inner function. In this case outer function should accept parameter length and inner function should accept parameter breadth.
+            </div>
+            <div class="answer">
+            <pre class="code">
+              function calc(length){
+                function innercalc(breadth){
+                    return length*breadth;
+                }
+                return innercalc;
+              }
+              const ans1=calc(9);
+              const area=ans1(15);
+              console.log(area);
+            </pre>
+            <p class="answer">200</p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+                Q 5. Take a variable in outer function and create an inner function to increase the counter every time it is called
+            </div>
+            <div class="answer">
+            <pre class="code">
+             function counter(){
+                var counter=0;
+
+                function IncreaseCounter(){
+                    return counter+=1;
+                }
+                return IncreaseCounter;
+             }
+             const func2=counter(0);
+             func2():
+             func2();
+             func2();
+             func2();
+             func2();
+            </pre>
+            <p class="answer">1 <br> 2 <br> 3 <br> 4 <br> 5 <br></p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+            Q 6. :- Print Output
+            </div>
+            <div class="answer">
+            <pre class="code">
+                var a = 12;
+                (function () {
+                  alert(a);
+                })();
+            </pre>
+            <p class="answer">OUTPUT :- 12</p>
+            <p class="answer">It will show as a popup.</p>
+            </div>
+        </div>
+        <hr>
+
+
+        <div class="container">
+            <div class="question">
+            Q 7. :- Print Output
+            </div>
+            <div class="answer">
+            <pre class="code">
+                var a = 10;
+                var x = (function () {
+                  var a = 12;
+                  return function () {
+                    alert(a);
+                  };
+                })();
+                x();
+            </pre>
+            <p class="answer">OUTPUT :- 12</p>
+            <p class="answer">It will show as a popup.(var a=10 will be updated as var a=12, because var is a global scope) </p>
+            </div>
+        </div>
+        <hr>
+
+        <div class="container">
+            <div class="question">
+            Q 8. :- Print Output
+            </div>
+            <div class="answer">
+            <pre class="code">
+                var globalVar = ""xyz"";
+
+                (function outerFunc(outerArg) {
+                    var outerVar = 'a';
+                    
+                    (function innerFunc(innerArg) {
+                    var innerVar = 'b';
+                    
+                    console.log(
+                        ""outerArg = "" + outerArg + ""\n"" +
+                        ""innerArg = "" + innerArg + ""\n"" +
+                        ""outerVar = "" + outerVar + ""\n"" +
+                        ""innerVar = "" + innerVar + ""\n"" +
+                        ""globalVar = "" + globalVar);
+                    
+                    })(456);
+                })(123);
+            </pre>
+            <p class="answer">OUTPUT :- outerArg = 123 <br>
+                innerArg = 456 <br>
+                outerVar = a <br>
+                innerVar = b <br>
+                globalVar = xyz</p>
+            <p class="answer">Every variable and function is assigned with respected value</div>
+        </div>
+        <hr>
+
+    </div>
+</body>
+</html>
